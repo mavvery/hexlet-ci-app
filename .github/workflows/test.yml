@@ -1,15 +1,21 @@
-name: Setting workflow
+name: hexlet-ci-app
 on: push
 jobs:
   build:
-    runs-on: macos-latest
-
+    runs-on: ubuntu-latest
     steps:
-   - uses: actions/checkout@v2
-   - name: setup node.js version 18
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '18' 
-    - run: make setup
-    - run: make test
-    - run: make lint
+          node-version: 18
+          cache: 'npm'
+      - name: Install app
+        run: make install
+      - name: Testing
+        run: make test
+      - name: Linting
+        run: make lint
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
