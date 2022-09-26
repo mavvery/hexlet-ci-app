@@ -2,7 +2,7 @@ name: Setting workflow
 on: push
 
 jobs:
-  buildAndTest:
+  build:
     runs-on: macos-latest
 
     steps:
