@@ -2,20 +2,15 @@ name: Setting workflow
 on: push
 
 jobs:
-  build:
+  buildAndTest:
     runs-on: macos-latest
 
-  steps:
+    steps:
    - uses: actions/checkout@v2
-     - name: setup node.js version 18
+   - name: setup node.js version 18
         uses: actions/setup-node@v3
         with:
           node-version: '18' 
-      - run: make setup
-    - run: npm ci
-    - run: npm test
-    - run: npm install
-    - run: npm run lint
-    - name: run tests
-      run: npm test
-
+    - run: make setup
+    - run: make test
+    - run: make lint
